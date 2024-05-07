@@ -3,11 +3,13 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "0beb44af0107b674c9d413ca565bb172",
-"assets/AssetManifest.bin.json": "54e3d56bb83bd10d93e8c0c5a1cb5d2d",
-"assets/AssetManifest.json": "e2c82fc650e04817a8d26ffef2bbed14",
-"assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
+const RESOURCES = {"assets/AssetManifest.bin": "ad643b7013f5f59d90eff2bd2064a973",
+"assets/AssetManifest.bin.json": "53b6c9be8d3e40b896dc73ea57c0ea84",
+"assets/AssetManifest.json": "5cc9b8fbe1b148efae57398e57d3ce3c",
+"assets/FontManifest.json": "b5e3ee63e20ec9dd0e7f5cd715ea5797",
 "assets/fonts/MaterialIcons-Regular.otf": "5817f9eff65b6ff97d9e42defe15ff01",
+"assets/lib/assets/fonts/openhuninn.ttf": "a4db9e63b7060ad22f53babd43410a5d",
+"assets/lib/assets/fonts/TaipeiSansRegular.ttf": "7cf11eedfd307ceae0e05fbd74fbde60",
 "assets/lib/assets/pics/camera_photo.jpg": "d35c9f379fd0a284c4976e4f099d15fc",
 "assets/lib/assets/pics/meow.jpg": "1714f05a0fae09b02bcf28e8596cff4b",
 "assets/lib/assets/pics/polaroid.png": "75e14e19465595a2a9abedff450de438",
@@ -36,9 +38,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "0beb44af0107b674c9d413ca565bb172
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "8b6417df864d53f7d9c7508f517eb43c",
-"/": "8b6417df864d53f7d9c7508f517eb43c",
-"main.dart.js": "679858e13011555af39c081cd665b428",
+"index.html": "27068f824a990eb21bd2241602dd26b8",
+"/": "27068f824a990eb21bd2241602dd26b8",
+"main.dart.js": "802beb1e4a4ebbbf0cac750092449d4e",
 "manifest.json": "6f8831e8849ec9403ccd37e7914e3fb4",
 "version.json": "adcd24159c5ec8e67e4409675202aea6"};
 // The application shell files that are downloaded before a service worker can
