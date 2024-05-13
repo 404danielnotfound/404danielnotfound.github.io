@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:image/image.dart' as img;
 import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
+import 'package:remote_camera_official_app/core/import_core.dart';
 import 'package:remote_camera_official_app/features/01_home/util/generateUrl.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/preview_payment_controller.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
@@ -22,7 +20,6 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/widge
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/share_qr_code.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
 import '../../../core/providers.dart';
 import '../../../theme/pallete.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -50,10 +47,9 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   CarouselController carouselController = CarouselController();
   int currentIndex = 0;
   GlobalKey genKey = GlobalKey();
-  WidgetsToImageController controller = WidgetsToImageController();
   double imageAspectRatio = 0;
   String qrCodeURL = '';
-  late Uint8List qrScreenShot;
+  Uint8List qrScreenShot = Uint8List(0);
   ScreenshotController screenshotController = ScreenshotController();
 
   @override
@@ -110,36 +106,8 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     });
   }
 
-  void downloadScreenShot() async {
-    await WebImageDownloader.downloadImageFromUInt8List(
-        uInt8List: qrScreenShot, name: 'QR Code');
-  }
 
-  Future<void> generateScreenshot() async {
-    try {
-      final bytes = await controller.capture();
-      print('Part 1');
-      qrScreenShot = compressImage(bytes!, 1000, 1000);
-      print("Captured image size: ${qrScreenShot.length} bytes");
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 
-  Uint8List compressImage(Uint8List imageData, int newWidth, int newHeight) {
-
-      // Decode the image
-      img.Image? image = img.decodeImage(imageData);
-
-      // Resize the image
-      img.Image resizedImage = img.copyResize(image!, width: newWidth, maintainAspect: true);
-
-      // Encode the resized image to a Uint8List
-      Uint8List compressedImageData = img.encodePng(resizedImage);
-
-      return compressedImageData;
-
-  }
 
   void generateUrl(){
     qrCodeURL = ref.read(qrCodeUrlProvider);
@@ -149,22 +117,27 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     }
   }
 
-  void screenShotTake(){
-    print('Exe1');
+  Future<void> takeScreenshot() async {
     try{
-      screenshotController.captureFromWidget(
-        ShareQRCode(
-            imageFiles: imageFiles,
-            controller: controller,
-            imageAspectRatio: imageAspectRatio,
-            url: qrCodeURL),
-      ).then((capturedImage){
-        qrScreenShot = capturedImage;
-      });
+      if(qrScreenShot.isEmpty){
+        await screenshotController.captureFromWidget(
+          ShareQRCode(
+              imageFiles: imageFiles,
+              imageAspectRatio: imageAspectRatio,
+              url: qrCodeURL),
+        ).then((capturedImage){
+          qrScreenShot = capturedImage;
+          print("Screenshot taken");
+        });
+      }
     }catch(e){
       print('Error: ${e.toString()}');
     }
-    print("Exe2");
+  }
+
+  void downloadScreenShot() async {
+    await WebImageDownloader.downloadImageFromUInt8List(
+        uInt8List: qrScreenShot, name: 'QR Code');
   }
 
 
@@ -283,10 +256,12 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                             ],
                           ),
                         ),
-                        QRCode_new(url: qrCodeURL,onDownload: (){
+                        QRCode_new(url: qrCodeURL,onDownload: () async {
+                          await takeScreenshot();
                           downloadScreenShot();
-                        },onShare: (){
-                          screenShotTake();
+                        },onShare: () async {
+                          await takeScreenshot();
+                          sharePlusUint8List(qrScreenShot);
                         },),
 
                       ],
