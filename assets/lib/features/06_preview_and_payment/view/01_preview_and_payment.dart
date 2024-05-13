@@ -20,6 +20,7 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/widge
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/countdown.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/qr_code.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/share_qr_code.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 import '../../../core/providers.dart';
@@ -53,6 +54,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   double imageAspectRatio = 0;
   String qrCodeURL = '';
   late Uint8List qrScreenShot;
+  ScreenshotController screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -145,6 +147,24 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
       ref.watch(qrCodeUrlProvider.notifier).state = generateQRCodeUrl(widget.randomID);
       qrCodeURL = ref.read(qrCodeUrlProvider);
     }
+  }
+
+  void screenShotTake(){
+    print('Exe1');
+    try{
+      screenshotController.captureFromWidget(
+        ShareQRCode(
+            imageFiles: imageFiles,
+            controller: controller,
+            imageAspectRatio: imageAspectRatio,
+            url: qrCodeURL),
+      ).then((capturedImage){
+        qrScreenShot = capturedImage;
+      });
+    }catch(e){
+      print('Error: ${e.toString()}');
+    }
+    print("Exe2");
   }
 
 
@@ -266,13 +286,9 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         QRCode_new(url: qrCodeURL,onDownload: (){
                           downloadScreenShot();
                         },onShare: (){
-                          generateScreenshot();
+                          screenShotTake();
                         },),
-                        ShareQRCode(
-                            imageFiles: imageFiles,
-                            controller: controller,
-                            imageAspectRatio: imageAspectRatio,
-                            url: qrCodeURL),
+
                       ],
                     ),
                   ),
