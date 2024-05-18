@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/03_processing_payment.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/view/03_confirmContact.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/view/04_processing_payment.dart';
 import 'package:remote_camera_official_app/theme/pallete.dart';
-import '../util/enum.dart';
+import '../../../core/enum.dart';
 import '../widget/paymentCard.dart';
 
 class ChoosePayment extends ConsumerWidget {
@@ -17,7 +18,7 @@ class ChoosePayment extends ConsumerWidget {
 
   void processPayment(
       {required BuildContext context, required PaymentType paymentType}) {
-    Navigator.push(context, ProcessingPayment.route(paymentType: paymentType));
+    Navigator.push(context, ConfirmContactPage.route(paymentType));
   }
 
   @override

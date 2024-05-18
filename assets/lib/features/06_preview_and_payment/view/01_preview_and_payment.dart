@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,13 +8,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
+import 'package:remote_camera_official_app/core/enum.dart';
 import 'package:remote_camera_official_app/core/import_core.dart';
 import 'package:remote_camera_official_app/features/01_home/util/generateUrl.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/preview_payment_controller.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/02_choose_payment.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/bill.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/carouselCard.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/carouselCard_preview.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/checkBoxes.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/countdown.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/qr_code.dart';
@@ -43,14 +45,15 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   List<Widget> carouselWidget = [];
   List<Widget> checkBoxWidgetList = [];
   List<Uint8List> imageFiles = [];
+  List<String> photoIDList = [];
   bool photoReady = false;
   CarouselController carouselController = CarouselController();
   int currentIndex = 0;
-  GlobalKey genKey = GlobalKey();
   double imageAspectRatio = 0;
   String qrCodeURL = '';
   Uint8List qrScreenShot = Uint8List(0);
   ScreenshotController screenshotController = ScreenshotController();
+  Key indicatorKey = GlobalKey();
 
   @override
   void initState() {
@@ -58,6 +61,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     print(takenPhotoList.length);
     if (takenPhotoList.isNotEmpty) {
       imageFiles = takenPhotoList.values.toList();
+      photoIDList = takenPhotoList.keys.toList();
       generateWidgets();
       photoReady == true;
     }
@@ -68,12 +72,12 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   void didChangeDependencies() async {
     if (photoReady == false) {
       //Get the file IDs
-      final photoIDList = await ref
+      photoIDList = await ref
           .watch(previewPaymentControllerProvider.notifier)
           .getImageFileIDs();
       imageFiles = await ref
           .watch(previewPaymentControllerProvider.notifier)
-          .downloadPhotos(photoIDList: photoIDList);
+          .getPhotoPreview(photoIDList: photoIDList,quality: PhotoQuality.low);
       generateWidgets();
       setState(() {
         ref
@@ -81,8 +85,6 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
             .startCountdown(71284, ref);
         photoReady = true;
       });
-      await Future.delayed(const Duration(milliseconds: 500));
-      // generateScreenshot();
     }
 
     super.didChangeDependencies();
@@ -94,19 +96,19 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   }
 
   void generateWidgets() {
+    // final takenPhotoList = ref.read(takenPhotoProvider);
     updateAspectRatio();
     imageFiles.asMap().forEach((i, photoFile) {
       //Generate carousel widget
-      carouselWidget.add(carouselCard(photoFile: photoFile, index: i));
+      carouselWidget.add(carouselCardPreview(photoFile: photoFile, index: i));
       //Generate checkbox widget
       checkBoxWidgetList.add(CheckBox(
-        number: i,
+        num: i,
+        photoID: photoIDList[i],
         carouselController: carouselController,
       ));
     });
   }
-
-
 
 
   void generateUrl(){
@@ -140,6 +142,19 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
         uInt8List: qrScreenShot, name: 'QR Code');
   }
 
+  // void onShare(String text) async {
+  //   final data = {
+  //     'text': text,
+  //   };
+  //   window.navigator.share(data).then((_) {
+  //     // Sharing successful
+  //     print('Shared successfully');
+  //   }).catchError((error) {
+  //     // Handle error while sharing
+  //     print('Error sharing: $error');
+  //   });
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -165,18 +180,20 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                             items: carouselWidget,
                             options: CarouselOptions(
                                 controller: carouselController,
-                                showIndicator: false,
+                                showIndicator: true,
+                                indicatorMargin: 30,
                                 viewportFraction: 1,
                                 aspectRatio: imageAspectRatio,
-                                onScrolled: (i) {
-                                  final int? page = i?.round();
-                                  // indicatorController.jumpTo(i!);
-                                  if (page != currentIndex) {
-                                    setState(() {
-                                      currentIndex = page!;
-                                    });
-                                  }
-                                }),
+                                // onScrolled: (i) {
+                                //   final int? page = i?.round();
+                                //   // indicatorController.jumpTo(i!);
+                                //   if (page != currentIndex) {
+                                //     setState(() {
+                                //       currentIndex = page!;
+                                //     });
+                                //   }
+                                // }
+                                ),
                           ),
                         ),
                         Padding(
@@ -185,6 +202,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               AnimatedSmoothIndicator(
+                                key: indicatorKey,
                                 count: imageFiles.length,
                                 effect: const WormEffect(
                                   dotColor: Pallete.greyColor,
@@ -212,7 +230,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                             children: checkBoxWidgetList,
                           ),
                         ),
-                        BillNew(),
+                        billFuck(ref),
                         Padding(
                           padding: const EdgeInsets.only(right: 20, top: 36),
                           child: Row(
@@ -223,29 +241,21 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                                 children: [
                                   RectangleButton(
                                     onTap: () {
-                                      Navigator.push(
-                                          context, ChoosePayment.route());
+                                      if(ref.read(checkedPhotoIDProvider).isNotEmpty){
+                                        Navigator.push(
+                                            context, ChoosePayment.route());
+                                      } else {
+                                        showSnackBar(context, '請選擇要購買的照片');
+                                      }
+
                                     },
                                     child: const Text(
-                                      '線上支付',
+                                      '前往付款',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w900,
                                           color: Colors.black),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  RectangleButton(
-                                    onTap: () {
-                                      downloadScreenShot();
-                                    },
-                                    child: const Text('找人代付',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.black)),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -262,6 +272,8 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         },onShare: () async {
                           await takeScreenshot();
                           sharePlusUint8List(qrScreenShot);
+                          //onShare('Meow meow');
+                          // onShareImage(imageFiles[0],'meow');
                         },),
 
                       ],
