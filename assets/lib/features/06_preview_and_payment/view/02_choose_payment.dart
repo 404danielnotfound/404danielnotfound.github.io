@@ -4,8 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/03_confirmContact.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/04_processing_payment.dart';
-import 'package:remote_camera_official_app/theme/pallete.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/dialogs.dart';
 import '../../../core/enum.dart';
 import '../widget/paymentCard.dart';
 
@@ -124,9 +123,8 @@ class ChoosePayment extends ConsumerWidget {
             child: Row(
               children: [
                 paymentCardType2(
-                    onTap: () {
-                      processPayment(
-                          context: context, paymentType: PaymentType.store);
+                    onTap: () async {
+                      showDialog(context: context, builder: (BuildContext context) => shopPaymentDialog(context: context));
                     },
                     name: '超商繳費',
                     logoAssetPath: 'lib/assets/pics/store.png',

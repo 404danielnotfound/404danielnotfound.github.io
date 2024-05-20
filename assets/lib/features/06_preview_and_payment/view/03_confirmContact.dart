@@ -6,6 +6,8 @@ import 'package:remote_camera_official_app/features/05_contactRequest/controller
 import 'package:remote_camera_official_app/features/05_contactRequest/view/input_field.dart';
 import 'package:remote_camera_official_app/core/enum.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/04_processing_payment.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/view/05_sotre_instruction.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/view/06_ATM_instruction.dart';
 import '../../../core/utils.dart';
 import '../../../theme/pallete.dart';
 import '../../01_home/view/01_home_view.dart';
@@ -110,7 +112,16 @@ class _ContactRequestPageState extends ConsumerState<ConfirmContactPage> {
                               // Form is valid, process the input data
                               String inputData = inputController.text;
                               ref.watch(contactDataProvider.notifier).state = inputData;
-                              Navigator.push(context, ProcessingPayment.route(paymentType: widget.paymentType));
+                              if(widget.paymentType == PaymentType.store){
+                                Navigator.push(context, StorePaymentInstruction.route());
+                              }
+
+                              else if(widget.paymentType == PaymentType.atm){
+                                Navigator.push(context, ATMPaymentInstruction.route());
+                            } else {
+                                Navigator.push(context, ProcessingPayment.route(paymentType: widget.paymentType));
+                              }
+
                             }
                           }),
                     ],

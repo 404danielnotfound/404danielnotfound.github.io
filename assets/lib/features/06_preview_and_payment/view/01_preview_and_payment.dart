@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:remote_camera_official_app/common_widget/import_common_widgets.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
 import 'package:remote_camera_official_app/core/enum.dart';
 import 'package:remote_camera_official_app/core/import_core.dart';
@@ -14,6 +15,7 @@ import 'package:remote_camera_official_app/features/01_home/util/generateUrl.dar
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/preview_payment_controller.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/02_choose_payment.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/view/07_payment_record.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/bill.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/carouselCard_preview.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/checkBoxes.dart';
@@ -58,7 +60,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   @override
   void initState() {
     Map<String, Uint8List> takenPhotoList = ref.read(takenPhotoProvider);
-    print(takenPhotoList.length);
+    // print(takenPhotoList.length);
     if (takenPhotoList.isNotEmpty) {
       imageFiles = takenPhotoList.values.toList();
       photoIDList = takenPhotoList.keys.toList();
@@ -75,6 +77,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
       photoIDList = await ref
           .watch(previewPaymentControllerProvider.notifier)
           .getImageFileIDs();
+      await ref.watch(previewPaymentControllerProvider.notifier).getPhotoSessionCollection(ref);
       imageFiles = await ref
           .watch(previewPaymentControllerProvider.notifier)
           .getPhotoPreview(photoIDList: photoIDList,quality: PhotoQuality.low);
@@ -90,14 +93,11 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     super.didChangeDependencies();
   }
 
-  void updateAspectRatio() {
-    final imageSize = ImageSizeGetter.getSize(MemoryInput(imageFiles[0]));
-    imageAspectRatio = imageSize.width / imageSize.height;
-  }
 
   void generateWidgets() {
     // final takenPhotoList = ref.read(takenPhotoProvider);
-    updateAspectRatio();
+    generateUrl();
+    imageAspectRatio = getAspectRatio(image: imageFiles[0]);
     imageFiles.asMap().forEach((i, photoFile) {
       //Generate carousel widget
       carouselWidget.add(carouselCardPreview(photoFile: photoFile, index: i));
@@ -180,7 +180,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                             items: carouselWidget,
                             options: CarouselOptions(
                                 controller: carouselController,
-                                showIndicator: true,
+                                showIndicator: false,
                                 indicatorMargin: 30,
                                 viewportFraction: 1,
                                 aspectRatio: imageAspectRatio,
@@ -260,13 +260,29 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                                   const SizedBox(
                                     height: 10,
                                   ),
+                                  RectangleButton(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context, PaymentRecord.route());
+                                    },
+                                    child: const Text(
+                                      '購買記錄',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   const CountdownTimer(),
                                 ],
                               )
                             ],
                           ),
                         ),
-                        QRCode_new(url: qrCodeURL,onDownload: () async {
+                        QRCodeDisplay(url: qrCodeURL,onDownload: () async {
                           await takeScreenshot();
                           downloadScreenShot();
                         },onShare: () async {
@@ -287,22 +303,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                 ),
               ],
             )
-          : const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '照片處理中...',
-                  style: TextStyle(fontSize: 15, color: Colors.black),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                SpinKitDoubleBounce(
-                  size: 15,
-                  color: Pallete.mainColor,
-                ),
-              ],
-            ),
+          : loadingWidget('請稍後...')
     );
   }
 }
