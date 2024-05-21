@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/appbar.dart';
 import 'package:remote_camera_official_app/common_widget/import_common_widgets.dart';
-import 'package:remote_camera_official_app/core/import_core.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/preview_payment_controller.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/record_detail_card.dart';

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,7 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/widge
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/carouselCard_preview.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/checkBoxes.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/countdown.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/pageIndicator.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/qr_code.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/share_qr_code.dart';
 import 'package:screenshot/screenshot.dart';
@@ -47,6 +49,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   List<Uint8List> imageFiles = [];
   List<String> previewIDList = [];
   CarouselController carouselController = CarouselController();
+  PageController indicatorController = PageController();
   int currentIndex = 0;
   double imageAspectRatio = 0;
   Uint8List qrScreenShot = Uint8List(0);
@@ -55,14 +58,9 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
 
   @override
   void initState() {
-    // Map<String, Uint8List> takenPhotoList = ref.read(takenPhotoProvider);
     imageFiles = widget.photoPreviewFiles;
-    print('Mark 1');
     previewIDList = stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
-    print('Mark 2');
     generateWidgets();
-    print('Mark 3');
-
 
     super.initState();
   }
@@ -77,10 +75,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   }
 
   void generateWidgets() {
-    // final takenPhotoList = ref.read(takenPhotoProvider);
-    print('Mark 11');
     imageAspectRatio = getAspectRatio(image: imageFiles[0]);
-    print('Mark 12');
     imageFiles.asMap().forEach((i, photoFile) {
       //Generate carousel widget
       carouselWidget.add(carouselCardPreview(photoFile: photoFile, index: i));
@@ -155,38 +150,17 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                       indicatorMargin: 30,
                       viewportFraction: 1,
                       aspectRatio: imageAspectRatio,
-                      // onScrolled: (i) {
-                      //   final int? page = i?.round();
-                      //   // indicatorController.jumpTo(i!);
-                      //   if (page != currentIndex) {
-                      //     setState(() {
-                      //       currentIndex = page!;
-                      //     });
-                      //   }
-                      // }
+                      onScrolled: (i) {
+                        final int? page = i?.round();
+                        if(page != currentIndex){
+                          ref.read(indicatorIndexProvider.notifier).state = page!;
+                          currentIndex = page!;
+                        }
+                      }
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AnimatedSmoothIndicator(
-                        key: indicatorKey,
-                        count: imageFiles.length,
-                        effect: const WormEffect(
-                          dotColor: Pallete.greyColor,
-                          activeDotColor: Pallete.mainColor,
-                          // radius: 8,
-                          dotHeight: 10,
-                          dotWidth: 10,
-                        ),
-                        activeIndex: currentIndex,
-                      ),
-                    ],
-                  ),
-                ),
+                PageIndicator(imageFiles),
                 Container(
                   margin: const EdgeInsets.only(top: 25, left: 20),
                   child: const Text(
@@ -200,7 +174,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                     children: checkBoxWidgetList,
                   ),
                 ),
-                billFuck(ref),
+                BillNew(),
                 Padding(
                   padding: const EdgeInsets.only(right: 20, top: 36),
                   child: Row(
