@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/appbar.dart';
@@ -46,9 +47,9 @@ class _PaymentRecordState extends ConsumerState<PaymentRecord> {
           appbar(context: context, title: '付款記錄'),
           const SizedBox(height: 10,),
           ...recordCards,
-
         ],
       ) : loadingWidget('請稍後...'),
     );
   }
 }
+

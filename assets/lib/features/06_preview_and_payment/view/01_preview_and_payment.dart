@@ -49,28 +49,24 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   List<Uint8List> imageFiles = [];
   List<String> previewIDList = [];
   CarouselController carouselController = CarouselController();
-  PageController indicatorController = PageController();
   int currentIndex = 0;
   double imageAspectRatio = 0;
-  Uint8List qrScreenShot = Uint8List(0);
-  ScreenshotController screenshotController = ScreenshotController();
-  Key indicatorKey = GlobalKey();
+
 
   @override
   void initState() {
     imageFiles = widget.photoPreviewFiles;
-    previewIDList = stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
+    previewIDList =
+        stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
     generateWidgets();
+
 
     super.initState();
   }
 
   @override
   void didChangeDependencies() async {
-
-    ref
-        .watch(previewPaymentControllerProvider.notifier)
-        .startCountdown(ref);
+    ref.watch(previewPaymentControllerProvider.notifier).startCountdown(ref);
 
     super.didChangeDependencies();
   }
@@ -89,29 +85,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     });
   }
 
-
-  Future<void> generateQRDownload() async {
-    try {
-      if (qrScreenShot.isEmpty) {
-        await screenshotController
-            .captureFromWidget(
-          ShareQRCode(
-              imageFile: imageFiles[0],
-              imageAspectRatio: imageAspectRatio,
-              url: generateQRCodeUrl(ref.read(randomIdProvider))),
-        )
-            .then((capturedImage) async {
-          print("Screenshot taken");
-          await WebImageDownloader.downloadImageFromUInt8List(
-              uInt8List: capturedImage, name: 'QR Code');
-        });
-      }
-    } catch (e) {
-      print('Error: ${e.toString()}');
-    }
-  }
-
-  onPay(){
+  onPay() {
     if (ref.read(checkedPhotoIDProvider).isNotEmpty) {
       ref.read(previewPaymentControllerProvider.notifier).updateFinalPrice(ref);
       Navigator.push(context, ChoosePayment.route());
@@ -120,10 +94,10 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    bool hasPaymentRecord = (ref.read(photoSessionCollectionProvider)['payment']).isNotEmpty;
+
     return Scaffold(
         body: Column(
       children: [
@@ -144,19 +118,19 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                   child: FlutterCarousel(
                     items: carouselWidget,
                     options: CarouselOptions(
-                      controller: carouselController,
-                      showIndicator: false,
-                      indicatorMargin: 30,
-                      viewportFraction: 1,
-                      aspectRatio: imageAspectRatio,
-                      onScrolled: (i) {
-                        final int? page = i?.round();
-                        if(page != currentIndex){
-                          ref.read(indicatorIndexProvider.notifier).state = page!;
-                          currentIndex = page!;
-                        }
-                      }
-                    ),
+                        controller: carouselController,
+                        showIndicator: false,
+                        indicatorMargin: 30,
+                        viewportFraction: 1,
+                        aspectRatio: imageAspectRatio,
+                        onScrolled: (i) {
+                          final int? page = i?.round();
+                          if (page != currentIndex) {
+                            ref.read(indicatorIndexProvider.notifier).state =
+                                page!;
+                            currentIndex = page!;
+                          }
+                        }),
                   ),
                 ),
                 PageIndicator(imageFiles),
@@ -182,15 +156,29 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          RectangleButton2(onTap: (){
-                            onPay();
-                          }, text: '前往付款', textSize: 20, fontWeight: FontWeight.w900,padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),),
+                          RectangleButton2(
+                            onTap: () {
+                              onPay();
+                            },
+                            text: '前往付款',
+                            textSize: 20,
+                            fontWeight: FontWeight.w900,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 12),
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
-                          RectangleButton2(onTap: (){
-                            Navigator.push(context, PaymentRecord.route());
-                          }, text: '購買記錄', textSize: 20, fontWeight: FontWeight.w900,padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),),
+                          hasPaymentRecord? RectangleButton2(
+                            onTap: () {
+                              Navigator.push(context, PaymentRecord.route());
+                            },
+                            text: '購買記錄',
+                            textSize: 20,
+                            fontWeight: FontWeight.w900,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 12),
+                          ):Container(),
                           const SizedBox(
                             height: 10,
                           ),
@@ -200,7 +188,10 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                     ],
                   ),
                 ),
-                QRCodeShare2(imageFiles: imageFiles[0], imageAspectRatio: imageAspectRatio,)
+                QRCodeShare2(
+                  imageFiles: imageFiles[0],
+                  imageAspectRatio: imageAspectRatio,
+                )
               ],
             ),
           ),
