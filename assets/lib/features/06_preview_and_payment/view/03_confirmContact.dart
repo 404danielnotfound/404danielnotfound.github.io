@@ -42,6 +42,25 @@ class _ContactRequestPageState extends ConsumerState<ConfirmContactPage> {
     super.initState();
   }
 
+  void onConfirm(){
+    if (_formKey.currentState!.validate()) {
+      // Validate the form
+      // Form is valid, process the input data
+      String inputData = inputController.text;
+      ref.watch(contactDataProvider.notifier).state = inputData;
+      if(widget.paymentType == PaymentType.store){
+        Navigator.push(context, StorePaymentInstruction.route());
+      }
+
+      else if(widget.paymentType == PaymentType.atm){
+        Navigator.push(context, ATMPaymentInstruction.route());
+      } else {
+        Navigator.push(context, ProcessingPayment.route(paymentType: widget.paymentType));
+      }
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -107,22 +126,7 @@ class _ContactRequestPageState extends ConsumerState<ConfirmContactPage> {
                             ),
                           ),
                           onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              // Validate the form
-                              // Form is valid, process the input data
-                              String inputData = inputController.text;
-                              ref.watch(contactDataProvider.notifier).state = inputData;
-                              if(widget.paymentType == PaymentType.store){
-                                Navigator.push(context, StorePaymentInstruction.route());
-                              }
-
-                              else if(widget.paymentType == PaymentType.atm){
-                                Navigator.push(context, ATMPaymentInstruction.route());
-                            } else {
-                                Navigator.push(context, ProcessingPayment.route(paymentType: widget.paymentType));
-                              }
-
-                            }
+                            onConfirm();
                           }),
                     ],
                   ),

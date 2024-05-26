@@ -31,16 +31,13 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
   @override
   void didChangeDependencies() async {
     try{
-      print(widget.encryptedID);
       final String randomID = decryptString(widget.encryptedID);
-      print('randomID = $randomID');
       ref.read(randomIdProvider.notifier).state = randomID;
       final result = await ref.watch(previewPaymentControllerProvider.notifier).getPhotoSessionCollection(ref);
       if (!result) throw Exception('Failed to retrieve photoSession');
       final photoIDList = stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
       final photoPreviewFiles = await ref.watch(previewPaymentControllerProvider.notifier).getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
       if (photoPreviewFiles.isEmpty) throw Exception('Photo preview files empty');
-      print('Navigator called!');
       Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles));
     } catch(e){
       print('Error: ${e.toString()}');

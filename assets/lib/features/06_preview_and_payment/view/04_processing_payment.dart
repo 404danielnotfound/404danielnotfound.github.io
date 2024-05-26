@@ -5,7 +5,6 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/contr
 import 'package:remote_camera_official_app/core/enum.dart';
 import 'dart:html' as html;
 import '../../../theme/pallete.dart';
-import 'dart:js' as js;
 
 class ProcessingPayment extends ConsumerStatefulWidget {
   static route({required PaymentType paymentType}) => MaterialPageRoute(
@@ -26,7 +25,7 @@ class _ProcessingPaymentState extends ConsumerState<ProcessingPayment> {
       switch(widget.paymentType){
         case PaymentType.linePay:
           final linePayUrl = await ref.watch(paymentControllerProvider.notifier).linePay(amount: 150);
-         openPaymentURL(url: linePayUrl);
+          openPaymentURL(url: linePayUrl);
         case PaymentType.jkPay:
           print('sdf');
         case _:
@@ -36,9 +35,9 @@ class _ProcessingPaymentState extends ConsumerState<ProcessingPayment> {
           openHtmlInNewTab(paymentDetail);
       }
 
-      // Navigator.pop(context);
+      Navigator.of(context)..pop()..pop();
     } catch(e){
-      print('Failed to make payment');
+      print('Failed to make payment: ${e.toString()}');
     }
 
     super.didChangeDependencies();
@@ -67,6 +66,7 @@ class _ProcessingPaymentState extends ConsumerState<ProcessingPayment> {
     }
 
   }
+
 
   @override
   Widget build(BuildContext context) {

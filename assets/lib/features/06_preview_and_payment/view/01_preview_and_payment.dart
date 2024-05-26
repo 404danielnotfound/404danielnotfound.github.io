@@ -67,9 +67,10 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
 
   @override
   void didChangeDependencies() async {
+
     ref
         .watch(previewPaymentControllerProvider.notifier)
-        .startCountdown(71284, ref);
+        .startCountdown(ref);
 
     super.didChangeDependencies();
   }
@@ -110,18 +111,16 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     }
   }
 
-  // void onShare(String text) async {
-  //   final data = {
-  //     'text': text,
-  //   };
-  //   window.navigator.share(data).then((_) {
-  //     // Sharing successful
-  //     print('Shared successfully');
-  //   }).catchError((error) {
-  //     // Handle error while sharing
-  //     print('Error sharing: $error');
-  //   });
-  // }
+  onPay(){
+    if (ref.read(checkedPhotoIDProvider).isNotEmpty) {
+      ref.read(previewPaymentControllerProvider.notifier).updateFinalPrice(ref);
+      Navigator.push(context, ChoosePayment.route());
+    } else {
+      showSnackBar(context, '請選擇要購買的照片');
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -185,11 +184,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         children: [
                           RectangleButton(
                             onTap: () {
-                              if (ref.read(checkedPhotoIDProvider).isNotEmpty) {
-                                Navigator.push(context, ChoosePayment.route());
-                              } else {
-                                showSnackBar(context, '請選擇要購買的照片');
-                              }
+                              onPay();
                             },
                             child: const Text(
                               '前往付款',
@@ -226,12 +221,11 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                 QRCodeDisplay(
                   url: generateQRCodeUrl(ref.read(randomIdProvider)),
                   onDownload: () async {
+
                     await generateQRDownload();
                   },
                   onShare: () async {
-                    //sharePlusUint8List(qrScreenShot);
-                    //onShare('Meow meow');
-                    // onShareImage(imageFiles[0],'meow');
+                    systemShareString('I need to create a string to share');
                   },
                 ),
               ],
