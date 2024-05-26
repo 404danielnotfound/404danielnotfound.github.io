@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/03_confirmContact.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/dialogs.dart';
+import '../../../common_widget/appbar.dart';
 import '../../../core/enum.dart';
 import '../widget/paymentCard.dart';
 
@@ -29,32 +30,7 @@ class ChoosePayment extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IntrinsicHeight(
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: RectangleButton(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    child: const Text(
-                      '取消',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text('請選擇付款方式',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-                )
-              ],
-            ),
-          ),
+          appbar(context: context, title: '選擇付款方式'),
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -71,12 +47,13 @@ class ChoosePayment extends ConsumerWidget {
                 const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 15),
             child: Row(
               children: [
-                paymentCardType1(
+                paymentCardType2(
                     onTap: () {
                       processPayment(
-                          context: context, paymentType: PaymentType.jkPay);
+                          context: context, paymentType: PaymentType.card);
                     },
-                    logoAssetPath: 'lib/assets/pics/jkpay2.png',
+                    name: '信用卡',
+                    logoAssetPath: 'lib/assets/pics/card.png',
                     width: paymentCardWidth),
                 const SizedBox(
                   width: 15,
@@ -87,21 +64,6 @@ class ChoosePayment extends ConsumerWidget {
                           context: context, paymentType: PaymentType.linePay);
                     },
                     logoAssetPath: 'lib/assets/pics/linepay.png',
-                    width: paymentCardWidth),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: Row(
-              children: [
-                paymentCardType2(
-                    onTap: () {
-                      processPayment(
-                          context: context, paymentType: PaymentType.card);
-                    },
-                    name: '信用卡',
-                    logoAssetPath: 'lib/assets/pics/card.png',
                     width: paymentCardWidth),
               ],
             ),

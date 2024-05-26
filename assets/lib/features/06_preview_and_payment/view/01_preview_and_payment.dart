@@ -96,7 +96,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
         await screenshotController
             .captureFromWidget(
           ShareQRCode(
-              imageFiles: imageFiles,
+              imageFile: imageFiles[0],
               imageAspectRatio: imageAspectRatio,
               url: generateQRCodeUrl(ref.read(randomIdProvider))),
         )
@@ -182,33 +182,15 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          RectangleButton(
-                            onTap: () {
-                              onPay();
-                            },
-                            child: const Text(
-                              '前往付款',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.black),
-                            ),
-                          ),
+                          RectangleButton2(onTap: (){
+                            onPay();
+                          }, text: '前往付款', textSize: 20, fontWeight: FontWeight.w900,padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),),
                           const SizedBox(
                             height: 10,
                           ),
-                          RectangleButton(
-                            onTap: () {
-                              Navigator.push(context, PaymentRecord.route());
-                            },
-                            child: const Text(
-                              '購買記錄',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.black),
-                            ),
-                          ),
+                          RectangleButton2(onTap: (){
+                            Navigator.push(context, PaymentRecord.route());
+                          }, text: '購買記錄', textSize: 20, fontWeight: FontWeight.w900,padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),),
                           const SizedBox(
                             height: 10,
                           ),
@@ -218,16 +200,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                     ],
                   ),
                 ),
-                QRCodeDisplay(
-                  url: generateQRCodeUrl(ref.read(randomIdProvider)),
-                  onDownload: () async {
-
-                    await generateQRDownload();
-                  },
-                  onShare: () async {
-                    systemShareString('I need to create a string to share');
-                  },
-                ),
+                QRCodeShare2(imageFiles: imageFiles[0], imageAspectRatio: imageAspectRatio,)
               ],
             ),
           ),
