@@ -47,7 +47,13 @@ class _PaymentRecordState extends ConsumerState<PaymentRecord> {
         children: [
           appbar(context: context, title: '購買記錄'),
           const SizedBox(height: 10,),
-          ...recordCards,
+          Expanded(child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ...recordCards
+              ],
+            ),
+          ))
         ],
       ) : loadingWidget('請稍後...'),
     );
