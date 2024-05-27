@@ -30199,7 +30199,7 @@ s.dx$=m
 n=m}s.a44(new A.XL(p,B.RP,o,n,l))
 s.OV()},
 Tl:function Tl(a){this.a=a},
-bia(a){var s=null,r=A.a([A.ai4(new A.aJN(),"Home","/"),A.ai4(new A.aJO(),"Get Photo","/get_photo/:encryptedID"),A.ai4(new A.aJP(),"linepay","/get_photo/linepay/:encryptedID")],t.yo)
+bia(a){var s=null,r=A.a([A.ai4(new A.aJN(),"Home","/"),A.ai4(new A.aJO(),"Get Photo","/get_photo/:encryptedID"),A.ai4(new A.aJP(),"linepay","/linepay/:encryptedID")],t.yo)
 return A.b7A(!1,s,s,s,s,"/",s,s,s,!1,s,!0,s,!1,new A.Z0(new A.ass(r,A.biA(),5)))},
 aJN:function aJN(){},
 aJO:function aJO(){},
@@ -103994,7 +103994,7 @@ var $async$DJ=A.C(function(b,c){if(b===1)return A.D(c,r)
 while(true)switch(s){case 0:o="LN"+A.b5g("yMMddHHmmss").Dh(new A.dI(Date.now(),!1))
 n=t.N
 s=3
-return A.I(p.x.pS("664d9bff422656e344b2",B.aa.pO(A.af(["api","payment","amount",B.d.j(p.as),"confirmUrl","https://app.bigdcam.cloudns.nz/#/get_photo/linepay/"+o,"productName","hip\u76f8\u6a5f\u96fb\u5b50\u76f8\u7247","paymentID",o],n,n),null)),$async$DJ)
+return A.I(p.x.pS("664d9bff422656e344b2",B.aa.pO(A.af(["api","payment","amount",B.d.j(p.as),"confirmUrl","https://app.bigdcam.cloudns.nz/#/linepay/"+o,"productName","hip\u76f8\u6a5f\u96fb\u5b50\u76f8\u7247","paymentID",o],n,n),null)),$async$DJ)
 case 3:q=c.fj(0,new A.ao1(),new A.ao2(p,o))
 s=1
 break
