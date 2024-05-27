@@ -25,6 +25,7 @@ class _PaymentRecordState extends ConsumerState<PaymentRecord> {
 
   @override
   void didChangeDependencies() async  {
+    await ref.watch(previewPaymentControllerProvider.notifier).getPhotoSessionCollection(ref);
     final photoSessionCollection = ref.read(photoSessionCollectionProvider);
     paymentRecord = photoSessionCollection['payment'];
     for (var recordID in paymentRecord) {
@@ -44,7 +45,7 @@ class _PaymentRecordState extends ConsumerState<PaymentRecord> {
     return Scaffold(
       body: dataReady ? Column(
         children: [
-          appbar(context: context, title: '付款記錄'),
+          appbar(context: context, title: '購買記錄'),
           const SizedBox(height: 10,),
           ...recordCards,
         ],
