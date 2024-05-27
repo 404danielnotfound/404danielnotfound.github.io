@@ -29961,7 +29961,7 @@ s.dx$=m
 n=m}s.a3N(new A.Xo(p,B.RG,o,n,l))
 s.OK()},
 T3:function T3(a){this.a=a},
-bh9(a){var s=null,r=A.a([A.ahn(new A.aIT(),"Home","/"),A.ahn(new A.aIU(),"Get Photo","/get_photo/:encryptedID"),A.ahn(new A.aIV(),"linepay","/linepay")],t.yo)
+bh9(a){var s=null,r=A.a([A.ahn(new A.aIT(),"Home","/"),A.ahn(new A.aIU(),"Get Photo","/get_photo/:encryptedID"),A.ahn(new A.aIV(),"LinePay","/linepay")],t.yo)
 return A.b6D(!1,s,s,s,s,"/",s,s,s,!1,s,!0,s,!1,new A.YC(new A.arI(r,A.bhz(),5)))},
 aIT:function aIT(){},
 aIU:function aIU(){},
@@ -103459,7 +103459,7 @@ throw A.d(A.bN(s))},
 $S:43}
 A.anm.prototype={
 $1(a){var s,r=B.ae.wH(0,a,null),q=J.au(r),p=J.aR(q.i(r,"info"),"transactionId")
-A.bn("Confirm url: https://app.bigdcam.cloudns.nz/#/get_photo/linepay")
+A.bn("Confirm url: https://app.bigdcam.cloudns.nz/#/linepay")
 if(!J.h(q.i(r,"returnCode"),"0000"))A.X(A.bN("Failed to create line payment link"))
 s=J.aR(J.aR(q.i(r,"info"),"paymentUrl"),"web")
 this.a.uw(p,this.b,B.kH)
@@ -109802,7 +109802,7 @@ B.QD=new A.bx(B.G8,B.Sh,null)
 B.GR=new A.tm(1,B.ea,B.QD,null)
 B.G5=new A.ag(0,0,0,20)
 B.lz=new A.q(!0,B.m,null,null,null,null,10,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a_i=new A.b3("xx\u79d1\u6280 All right reserved\n v0.0.1",null,B.lz,null,null,null,null,null,null,null)
+B.a_i=new A.b3("xx\u79d1\u6280 All right reserved\n v0.0.2",null,B.lz,null,null,null,null,null,null,null)
 B.Be=new A.d3(B.cg,null,null,B.a_i,null)
 B.QJ=new A.bx(B.G5,B.Be,null)
 B.GS=new A.tm(1,B.ea,B.QJ,null)
