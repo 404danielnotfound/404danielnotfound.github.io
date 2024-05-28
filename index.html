@@ -18,28 +18,31 @@
 
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="description" content="4/30/2024">
+    <meta name="description" content="Official remote camera app flutter file">
 
     <!-- iOS meta tags & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="rpi_camera_control_clean">
+    <meta name="apple-mobile-web-app-title" content="remote_camera_official_app">
     <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png"/>
 
-    <title>rpi_camera_control_clean</title>
+    <title>remote_camera_official_app</title>
     <link rel="manifest" href="manifest.json">
 
     <script>
         // The value below is injected by flutter build, do not touch.
-        const serviceWorkerVersion = "124479516";
+        const serviceWorkerVersion = "1031801716";
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
+
+
 </head>
 <body>
+
 <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -47,14 +50,17 @@
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
+        onEntrypointLoaded: async (engineInitializer) => {
+            const config = { renderer: "canvaskit" };
+            const appRunner = await engineInitializer.initializeEngine(config);
+            await appRunner.runApp();
         }
       });
     });
 </script>
+
+<!-- For flutter image compress, might need to delete later -->
+
 
 </body>
 </html>
