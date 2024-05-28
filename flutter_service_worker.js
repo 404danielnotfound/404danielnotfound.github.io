@@ -26,7 +26,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "56529de616b00921c3f2e70da7a20879
 "assets/lib/assets/pics/storeIcon.png": "a3255873e57d2aee74f5d71b9d834961",
 "assets/lib/assets/pics/wood_camera.png": "c4a96b33bb58364e42cf1169fd8a0998",
 "assets/lib/assets/survey/surveyQuestion.json": "5f2711d61e2b4ac85bf2e34292b93990",
-"assets/lib/features/06_preview_and_payment/view/01_preview_and_payment.dart": "d3f94bb1401085a55cf66445fd379e0a",
+"assets/lib/features/06_preview_and_payment/view/01_preview_and_payment.dart": "8a35030ab16f7d24b590fb870efa38bc",
 "assets/lib/features/06_preview_and_payment/view/01_preview_loading.dart": "d7be998cac61ce86ee7b64013d34759f",
 "assets/lib/features/06_preview_and_payment/view/02_choose_payment.dart": "d672ae4b1277a71c50b5068385cce1a1",
 "assets/lib/features/06_preview_and_payment/view/03_confirmContact.dart": "95d9276624a9f2b35827d73f0bb53746",
@@ -55,9 +55,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "56529de616b00921c3f2e70da7a20879
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "0a2ff951002b5d6d1051cb2b4e4d3582",
-"/": "0a2ff951002b5d6d1051cb2b4e4d3582",
-"main.dart.js": "1a82236765c100fbf05b9752214a5105",
+"index.html": "2ea8ecc8b2e0ad3c75673d415b8d63ef",
+"/": "2ea8ecc8b2e0ad3c75673d415b8d63ef",
+"main.dart.js": "1d288184aaee3de42cf39c62d684f930",
 "manifest.json": "6f8831e8849ec9403ccd37e7914e3fb4",
 "version.json": "adcd24159c5ec8e67e4409675202aea6"};
 // The application shell files that are downloaded before a service worker can

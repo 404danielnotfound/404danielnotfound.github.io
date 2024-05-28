@@ -1,18 +1,10 @@
-import 'dart:async';
-import 'dart:html';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:image_downloader_web/image_downloader_web.dart';
-import 'package:image_size_getter/image_size_getter.dart';
-import 'package:remote_camera_official_app/common_widget/import_common_widgets.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
-import 'package:remote_camera_official_app/core/enum.dart';
 import 'package:remote_camera_official_app/core/import_core.dart';
-import 'package:remote_camera_official_app/features/01_home/util/generateUrl.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/preview_payment_controller.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/02_choose_payment.dart';
@@ -23,10 +15,6 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/widge
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/countdown.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/pageIndicator.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/qr_code.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/share_qr_code.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../core/providers.dart';
 import '../../../theme/pallete.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 

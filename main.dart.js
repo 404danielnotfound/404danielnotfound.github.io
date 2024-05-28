@@ -29680,6 +29680,9 @@ while(true)switch(s){case 0:s=2
 return A.I(A.Y_(b,a),$async$aJh)
 case 2:return A.E(null,r)}})
 return A.F($async$aJh,r)},
+aYx(a){var s="https://app.bigdcam.cloudns.nz/#/get_photo/"+A.aYm(a)
+A.bd(s)
+return s},
 aKh:function aKh(){},
 aK7:function aK7(){},
 aK5:function aK5(a){this.a=a},
@@ -31546,9 +31549,6 @@ s=1
 break
 case 1:return A.E(q,r)}})
 return A.F($async$wn,r)},
-aYx(a){var s="https://404danielnotfound.github.io/#/get_photo/"+A.aYm(a)
-A.bd(s)
-return s},
 aZ0(a){var s,r,q,p,o,n,m,l=B.c.R(a,1,a.length-1).split("}, "),k=t.N,j=A.H(k,t.GU)
 for(s=0;s<l.length;){r=l[s]
 q=A.bY(r,"{","")
@@ -104107,7 +104107,7 @@ var $async$DL=A.C(function(b,c){if(b===1)return A.D(c,r)
 while(true)switch(s){case 0:o="LN"+A.b5o("yMMddHHmmss").Dj(new A.dJ(Date.now(),!1))
 n=t.N
 s=3
-return A.I(p.x.pU("664d9bff422656e344b2",B.aa.pQ(A.ag(["api","payment","amount",B.d.j(p.as),"confirmUrl","https://404danielnotfound.github.io/#/linepay/"+o,"cancelUrl","https://404danielnotfound.github.io/#/linepay_failed","productName","hip\u76f8\u6a5f\u96fb\u5b50\u76f8\u7247","paymentID",o],n,n),null)),$async$DL)
+return A.I(p.x.pU("664d9bff422656e344b2",B.aa.pQ(A.ag(["api","payment","amount",B.d.j(p.as),"confirmUrl","https://app.bigdcam.cloudns.nz/#/linepay/"+o,"cancelUrl","https://app.bigdcam.cloudns.nz/#/linepay_failed","productName","hip\u76f8\u6a5f\u96fb\u5b50\u76f8\u7247","paymentID",o],n,n),null)),$async$DL)
 case 3:q=c.fm(0,new A.ao7(),new A.ao8(p,o))
 s=1
 break
@@ -104156,7 +104156,7 @@ throw A.d(A.bE(s))},
 $S:30}
 A.ao8.prototype={
 $1(a){var s,r=B.aa.t4(0,a,null),q=J.aq(r),p=J.aL(q.i(r,"info"),"transactionId"),o=this.b
-A.bd("Confirm url: https://404danielnotfound.github.io/#/linepay/"+o)
+A.bd("Confirm url: https://app.bigdcam.cloudns.nz/#/linepay/"+o)
 if(!J.h(q.i(r,"returnCode"),"0000"))A.X(A.bE("Failed to create line payment link"))
 s=J.aL(J.aL(q.i(r,"info"),"paymentUrl"),"web")
 this.a.uB(p,o,B.kL)
@@ -110701,7 +110701,7 @@ B.QU=new A.bx(B.Gn,B.Sx,null)
 B.H4=new A.tx(1,B.ea,B.QU,null)
 B.Gk=new A.ah(0,0,0,20)
 B.lC=new A.r(!0,B.m,null,null,null,null,10,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a_A=new A.aX("xx\u79d1\u6280 All right reserved\n v0.0.8",null,B.lC,null,null,null,null,null,null,null)
+B.a_A=new A.aX("xx\u79d1\u6280 All right reserved\n v0.0.9",null,B.lC,null,null,null,null,null,null,null)
 B.Bq=new A.cY(B.c1,null,null,B.a_A,null)
 B.R_=new A.bx(B.Gk,B.Bq,null)
 B.H5=new A.tx(1,B.ea,B.R_,null)
