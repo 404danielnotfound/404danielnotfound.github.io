@@ -104104,7 +104104,7 @@ var $async$DL=A.C(function(b,c){if(b===1)return A.D(c,r)
 while(true)switch(s){case 0:o="LN"+A.b5m("yMMddHHmmss").Dj(new A.dJ(Date.now(),!1))
 n=t.N
 s=3
-return A.I(p.x.pU("664d9bff422656e344b2",B.aa.pQ(A.ag(["api","payment","amount",B.d.j(p.as),"confirmUrl","https://app.bigdcam.cloudns.nz/#/linepay/"+o,"productName","hip\u76f8\u6a5f\u96fb\u5b50\u76f8\u7247","paymentID",o],n,n),null)),$async$DL)
+return A.I(p.x.pU("664d9bff422656e344b2",B.aa.pQ(A.ag(["api","payment","amount",B.d.j(p.as),"confirmUrl","https://404danielnotfound.github.io/#/linepay/"+o,"productName","hip\u76f8\u6a5f\u96fb\u5b50\u76f8\u7247","paymentID",o],n,n),null)),$async$DL)
 case 3:q=c.fm(0,new A.ao6(),new A.ao7(p,o))
 s=1
 break
@@ -104153,7 +104153,7 @@ throw A.d(A.bE(s))},
 $S:34}
 A.ao7.prototype={
 $1(a){var s,r=B.aa.t4(0,a,null),q=J.aq(r),p=J.aK(q.i(r,"info"),"transactionId"),o=this.b
-A.bd("Confirm url: https://app.bigdcam.cloudns.nz/#/linepay/"+o)
+A.bd("Confirm url: https://404danielnotfound.github.io/#/linepay/"+o)
 if(!J.h(q.i(r,"returnCode"),"0000"))A.X(A.bE("Failed to create line payment link"))
 s=J.aK(J.aK(q.i(r,"info"),"paymentUrl"),"web")
 this.a.uB(p,o,B.kL)
