@@ -31,11 +31,17 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
   @override
   void didChangeDependencies() async {
     try{
+      //Decode encrypted ID into randomID
       final String randomID = decryptString(widget.encryptedID);
+      //Update randomID to provider
       ref.read(randomIdProvider.notifier).state = randomID;
-      final result = await ref.watch(previewPaymentControllerProvider.notifier).getPhotoSessionCollection(ref);
-      if (!result) throw Exception('Failed to retrieve photoSession');
+      //Get photoSessionCollection data of the randomID
+      await ref.watch(previewPaymentControllerProvider.notifier).getPhotoSessionCollection(ref);
+      //Check if the session expired
+      if(sessionExpired()) throw Exception("Session expired");
+      //Get photoID list through photoSessionCollection data
       final photoIDList = stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
+      //Download photo previews
       final photoPreviewFiles = await ref.watch(previewPaymentControllerProvider.notifier).getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
       if (photoPreviewFiles.isEmpty) throw Exception('Photo preview files empty');
       Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles));
@@ -48,6 +54,25 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
     }
 
     super.didChangeDependencies();
+  }
+
+  bool sessionExpired(){
+    final DateTime photoCreatedTime = DateTime.parse(ref.read(photoSessionCollectionProvider)['created_time']);
+    // Calculate the target datetime (12am 2 days after the date)
+    DateTime targetDatetime = photoCreatedTime.add(const Duration(days: 1));
+    targetDatetime = targetDatetime.copyWith(hour: 0, minute: 0, second: 0, microsecond: 0,millisecond: 0);
+    // Get the current time
+    DateTime now = DateTime.now();
+
+    // Calculate the difference in seconds
+    Duration difference = targetDatetime.difference(now);
+    int seconds = difference.inSeconds;
+
+    if(seconds>10){
+      return false;
+    }else {
+      return true;
+    }
   }
 
   @override

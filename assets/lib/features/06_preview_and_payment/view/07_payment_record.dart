@@ -45,7 +45,7 @@ class _PaymentRecordState extends ConsumerState<PaymentRecord> {
     return Scaffold(
       body: dataReady ? Column(
         children: [
-          appbar(context: context, title: '購買記錄'),
+          appbar(context: context, title: '購買記錄',cancel: false),
           const SizedBox(height: 10,),
           Expanded(child: SingleChildScrollView(
             child: Column(

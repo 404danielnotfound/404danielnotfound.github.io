@@ -84,109 +84,92 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     bool hasPaymentRecord = (ref.read(photoSessionCollectionProvider)['payment']).isNotEmpty;
 
     return Scaffold(
-        body: Column(
-      children: [
-        Expanded(
-            child: Stack(children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Pallete.backgroundColor,
-          ),
-          SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: FlutterCarousel(
-                    items: carouselWidget,
-                    options: CarouselOptions(
-                        controller: carouselController,
-                        showIndicator: false,
-                        indicatorMargin: 30,
-                        viewportFraction: 1,
-                        aspectRatio: imageAspectRatio,
-                        onScrolled: (i) {
-                          final int? page = i?.round();
-                          if (page != currentIndex) {
-                            ref.read(indicatorIndexProvider.notifier).state =
-                                page!;
-                            currentIndex = page!;
-                          }
-                        }),
-                  ),
-                ),
-                PageIndicator(imageFiles),
-                Container(
-                  margin: const EdgeInsets.only(top: 25, left: 20),
-                  child: const Text(
-                    '選擇要購買的照片',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 10, bottom: 44),
-                  child: Row(
-                    children: checkBoxWidgetList,
-                  ),
-                ),
-                BillNew(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20, top: 36),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+        body: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: FlutterCarousel(
+                        items: carouselWidget,
+                        options: CarouselOptions(
+          controller: carouselController,
+          showIndicator: false,
+          indicatorMargin: 30,
+          viewportFraction: 1,
+          aspectRatio: imageAspectRatio,
+          onScrolled: (i) {
+            final int? page = i?.round();
+            if (page != currentIndex) {
+              ref.read(indicatorIndexProvider.notifier).state =
+                  page!;
+              currentIndex = page!;
+            }
+          }),
+                      ),
+                    ),
+                    PageIndicator(imageFiles),
+                    Container(
+                      margin: const EdgeInsets.only(top: 25, left: 20),
+                      child: const Text(
+                        '選擇要購買的照片',
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, top: 10, bottom: 44),
+                      child: Row(
+                        children: checkBoxWidgetList,
+                      ),
+                    ),
+                    BillNew(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 36),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          RectangleButton2(
-                            onTap: () {
-                              onPay();
-                            },
-                            text: '前往付款',
-                            textSize: 20,
-                            fontWeight: FontWeight.w900,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          hasPaymentRecord? RectangleButton2(
-                            onTap: () {
-                              Navigator.push(context, PaymentRecord.route());
-                            },
-                            text: '購買記錄',
-                            textSize: 20,
-                            fontWeight: FontWeight.w900,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                          ):Container(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const CountdownTimer(),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                QRCodeShare(
-                  imageFiles: imageFiles[0],
-                  imageAspectRatio: imageAspectRatio,
-                )
-              ],
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            RectangleButton2(
+              onTap: () {
+                onPay();
+              },
+              text: '前往付款',
+              textSize: 20,
+              fontWeight: FontWeight.w900,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 12, vertical: 12),
             ),
-          ),
-        ])),
-        Container(
-          height: 30,
-          width: double.infinity,
-          color: Pallete.mainColor,
-        ),
-      ],
-    ));
+            const SizedBox(
+              height: 10,
+            ),
+            hasPaymentRecord? RectangleButton2(
+              onTap: () {
+                Navigator.push(context, PaymentRecord.route());
+              },
+              text: '購買記錄',
+              textSize: 20,
+              fontWeight: FontWeight.w900,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 12, vertical: 12),
+            ):Container(),
+            const SizedBox(
+              height: 10,
+            ),
+            const CountdownTimer(),
+          ],
+        )
+                        ],
+                      ),
+                    ),
+                    QRCodeShare(
+                      imageFiles: imageFiles[0],
+                      imageAspectRatio: imageAspectRatio,
+                    )
+                  ],
+                ),
+        ));
   }
 }
