@@ -47,15 +47,12 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
     previewIDList =
         stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
     generateWidgets();
-
-
     super.initState();
   }
 
   @override
   void didChangeDependencies() async {
     ref.watch(previewPaymentControllerProvider.notifier).startCountdown(ref);
-
     super.didChangeDependencies();
   }
 
@@ -176,7 +173,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                     ],
                   ),
                 ),
-                QRCodeShare2(
+                QRCodeShare(
                   imageFiles: imageFiles[0],
                   imageAspectRatio: imageAspectRatio,
                 )
