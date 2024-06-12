@@ -16,7 +16,7 @@ class ChoosePayment extends ConsumerWidget {
 
   const ChoosePayment({super.key});
 
-  void processPayment(
+  void paymentProceed(
       {required BuildContext context, required PaymentType paymentType}) {
     Navigator.push(context, ConfirmContactPage.route(paymentType));
   }
@@ -49,7 +49,7 @@ class ChoosePayment extends ConsumerWidget {
               children: [
                 paymentCardType2(
                     onTap: () {
-                      processPayment(
+                      paymentProceed(
                           context: context, paymentType: PaymentType.card);
                     },
                     name: '信用卡',
@@ -60,7 +60,7 @@ class ChoosePayment extends ConsumerWidget {
                 ),
                 paymentCardType1(
                     onTap: () {
-                      processPayment(
+                      paymentProceed(
                           context: context, paymentType: PaymentType.linePay);
                     },
                     logoAssetPath: 'lib/assets/pics/linepay.png',
@@ -86,7 +86,7 @@ class ChoosePayment extends ConsumerWidget {
               children: [
                 paymentCardType2(
                     onTap: () async {
-                      showDialog(context: context, builder: (BuildContext context) => shopPaymentDialog(context: context));
+                      showDialog(context: context, builder: (BuildContext context) => storePaymentDialog(context: context));
                     },
                     name: '超商繳費',
                     logoAssetPath: 'lib/assets/pics/store.png',
@@ -96,7 +96,7 @@ class ChoosePayment extends ConsumerWidget {
                 ),
                 paymentCardType2(
                     onTap: () {
-                      processPayment(
+                      paymentProceed(
                           context: context, paymentType: PaymentType.atm);
                     },
                     name: 'ATM轉賬',

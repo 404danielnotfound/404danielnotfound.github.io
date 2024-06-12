@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/payment_controller.dart';
 import 'package:remote_camera_official_app/core/enum.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/view/pop_up_confirm.dart';
 import 'dart:html' as html;
 import '../../../theme/pallete.dart';
 
@@ -26,22 +27,30 @@ class _ProcessingPaymentState extends ConsumerState<ProcessingPayment> {
         case PaymentType.linePay:
           final linePayUrl = await ref.watch(paymentControllerProvider.notifier).linePay(amount: 150);
           openPaymentURL(url: linePayUrl);
+          Navigator.push(context, PopUpConfirm.route(onRetryPayment: (){
+            openPaymentURL(url: linePayUrl);
+          }));
         case PaymentType.jkPay:
-          print('sdf');
+          print('jkPay Selected');
         case _:
+          print('Payment type is ${widget.paymentType.name}');
           //This includes all EZPay options
           final paymentDetail = await ref.watch(paymentControllerProvider.notifier).ezPay(paymentType: widget.paymentType);
           //print('Payment Details: $paymentDetail');
           openHtmlInNewTab(paymentDetail);
+          Navigator.push(context, PopUpConfirm.route(onRetryPayment: (){
+            openHtmlInNewTab(paymentDetail);
+          }));
       }
 
-      Navigator.of(context)..pop()..pop();
+    ;
     } catch(e){
       print('Failed to make payment: ${e.toString()}');
     }
 
     super.didChangeDependencies();
   }
+
 
   void openPaymentURL({required String url}){
     html.window.open(url,'new_tap');
