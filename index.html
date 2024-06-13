@@ -34,14 +34,32 @@
 
     <script>
         // The value below is injected by flutter build, do not touch.
-        const serviceWorkerVersion = "68729617";
+        const serviceWorkerVersion = "1457203928";
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
 
+    <style>
+        .container {
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .indicator {
+            width: 50vw; /* Adjust width as needed */
+        }
+    </style>
+
 
 </head>
-<body>
+<body style="overflow: hidden">
+    <div id="loading_indicator" class="container">
+        <img class="indicator" src="./assets/loading.gif" />
+    </div>
+
 
 <script>
     window.addEventListener('load', function(ev) {
@@ -59,8 +77,16 @@
     });
 </script>
 
-<!-- For flutter image compress, might need to delete later -->
-
+<script>
+    window.onLoad = function(){
+    setTimeout(function(）{
+        var loadingIndicator = document.getElementById("loading_indicator");
+        if(loadingIndicator){
+            loadingIndicator.remove();
+        }
+    }，10000)
+    }
+</script>
 
 </body>
 </html>

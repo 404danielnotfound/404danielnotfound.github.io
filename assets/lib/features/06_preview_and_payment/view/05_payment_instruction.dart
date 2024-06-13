@@ -5,6 +5,8 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/contr
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/04_processing_payment.dart';
 import 'package:remote_camera_official_app/theme/import_theme.dart';
 
+import '../../09_FAQ/view/FAQ.dart';
+
 class PaymentInstruction extends StatelessWidget {
   final PaymentType paymentType;
 
@@ -50,7 +52,9 @@ class PaymentInstruction extends StatelessWidget {
                   children: [
                     Expanded(
                         child: RectangleButton(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(context, FAQ.route());
+                      },
                       text: '常見問題',
                       textSize: 16,
                       fontWeight: FontWeight.w400,

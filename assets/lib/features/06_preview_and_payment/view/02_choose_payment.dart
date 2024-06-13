@@ -53,7 +53,7 @@ class ChoosePayment extends ConsumerWidget {
                           context: context, paymentType: PaymentType.card);
                     },
                     name: '信用卡',
-                    logoAssetPath: 'lib/assets/pics/card.png',
+                    logoAssetPath: 'lib/assets/icon/payment/card.png',
                     width: paymentCardWidth),
                 const SizedBox(
                   width: 15,
@@ -63,7 +63,7 @@ class ChoosePayment extends ConsumerWidget {
                       paymentProceed(
                           context: context, paymentType: PaymentType.linePay);
                     },
-                    logoAssetPath: 'lib/assets/pics/linepay.png',
+                    logoAssetPath: 'lib/assets/icon/payment/linepay.png',
                     width: paymentCardWidth),
               ],
             ),
@@ -89,7 +89,7 @@ class ChoosePayment extends ConsumerWidget {
                       showDialog(context: context, builder: (BuildContext context) => storePaymentDialog(context: context));
                     },
                     name: '超商繳費',
-                    logoAssetPath: 'lib/assets/pics/store.png',
+                    logoAssetPath: 'lib/assets/icon/payment/store.png',
                     width: paymentCardWidth),
                 const SizedBox(
                   width: 15,
@@ -100,7 +100,7 @@ class ChoosePayment extends ConsumerWidget {
                           context: context, paymentType: PaymentType.atm);
                     },
                     name: 'ATM轉賬',
-                    logoAssetPath: 'lib/assets/pics/atm.png',
+                    logoAssetPath: 'lib/assets/icon/payment/atm.png',
                     width: paymentCardWidth),
               ],
             ),
@@ -125,7 +125,7 @@ class ChoosePayment extends ConsumerWidget {
                 paymentCardType3(
                     onTap: () {},
                     name: '找人代付',
-                    logoAssetPath: 'lib/assets/pics/store.png',
+                    logoAssetPath: 'lib/assets/icon/payment/store.png',
                     width: paymentCardWidth),
               ],
             ),
