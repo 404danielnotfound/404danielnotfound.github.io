@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
+import 'package:remote_camera_official_app/core/enum.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/payment_controller.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/dialogs.dart';
+import 'package:remote_camera_official_app/features/07_photo_download/view/01_loading_photo.dart';
 import 'package:remote_camera_official_app/theme/import_theme.dart';
 import '../../../common_widget/appbar.dart';
 import '../../09_FAQ/view/FAQ.dart';
 
-class PopUpConfirm extends StatelessWidget {
-  static route({required VoidCallback onRetryPayment}) => MaterialPageRoute(
-    builder: (context) => PopUpConfirm(onRetryPayment: onRetryPayment,),
+class PopUpConfirm extends ConsumerWidget {
+  static route({required VoidCallback onRetryPayment,required paymentID}) => MaterialPageRoute(
+    builder: (context) => PopUpConfirm(onRetryPayment: onRetryPayment,paymentID: paymentID,),
   );
 
   final VoidCallback onRetryPayment;
+  final String paymentID;
 
-  const PopUpConfirm({super.key, required this.onRetryPayment,});
+  const PopUpConfirm({super.key, required this.onRetryPayment,required this.paymentID});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +68,23 @@ class PopUpConfirm extends StatelessWidget {
             Container(
                 margin: const EdgeInsets.symmetric(horizontal: 13,vertical: 13),
                 width: double.infinity,
-                child: RectangleButton2(onTap: (){}, text: '查詢付款結果', textSize: 27, fontWeight: FontWeight.w600,padding: const EdgeInsets.symmetric(vertical: 15))),
+                child: RectangleButton2(onTap: () async {
+                  final paymentResult = await ref.read(paymentControllerProvider.notifier).checkPaymentResult(paymentID: paymentID);
+                  switch(paymentResult){
+                    case PaymentResult.paid:
+                      Navigator.push(context, LoadingPhoto.route(paymentID, false));
+                      break;
+                    case PaymentResult.pending:
+                      showDialog(context: context, builder: (BuildContext context) => checkPaymentDialog(context: context, bodyText: '付款進行中，請稍後再試'));
+                      break;
+                    case PaymentResult.failed:
+                      showDialog(context: context, builder: (BuildContext context) => checkPaymentDialog(context: context, bodyText: '付款失敗，請重新付款'));
+                      break;
+                    default:
+                      showDialog(context: context, builder: (BuildContext context) => checkPaymentDialog(context: context, bodyText: '網絡錯誤，請稍後再試'));
+                      break;
+                  }
+                }, text: '查詢付款結果', textSize: 27, fontWeight: FontWeight.w600,padding: const EdgeInsets.symmetric(vertical: 15))),
 
       ]),
     );

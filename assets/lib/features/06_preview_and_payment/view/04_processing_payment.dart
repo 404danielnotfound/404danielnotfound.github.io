@@ -23,24 +23,27 @@ class _ProcessingPaymentState extends ConsumerState<ProcessingPayment> {
   @override
   void didChangeDependencies() async {
     try{
+      String paymentID;
       switch(widget.paymentType){
         case PaymentType.linePay:
-          final linePayUrl = await ref.watch(paymentControllerProvider.notifier).linePay(amount: 150);
+          String linePayUrl = '';
+          [linePayUrl, paymentID] = await ref.watch(paymentControllerProvider.notifier).linePay(amount: 150,ref: ref);
           openPaymentURL(url: linePayUrl);
           Navigator.push(context, PopUpConfirm.route(onRetryPayment: (){
             openPaymentURL(url: linePayUrl);
-          }));
+          }, paymentID: paymentID));
         case PaymentType.jkPay:
           print('jkPay Selected');
         case _:
+          String paymentDetail = '';
           print('Payment type is ${widget.paymentType.name}');
           //This includes all EZPay options
-          final paymentDetail = await ref.watch(paymentControllerProvider.notifier).ezPay(paymentType: widget.paymentType);
+          [paymentDetail, paymentID] = await ref.watch(paymentControllerProvider.notifier).ezPay(paymentType: widget.paymentType,ref: ref);
           //print('Payment Details: $paymentDetail');
           openHtmlInNewTab(paymentDetail);
           Navigator.push(context, PopUpConfirm.route(onRetryPayment: (){
             openHtmlInNewTab(paymentDetail);
-          }));
+          },paymentID: paymentID));
       }
 
     ;
