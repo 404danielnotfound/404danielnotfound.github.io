@@ -6,6 +6,7 @@ import 'package:remote_camera_official_app/core/import_core.dart';
 import 'package:remote_camera_official_app/core/providers.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/01_preview_and_payment.dart';
+import 'package:remote_camera_official_app/features/08_error/view/error_general.dart';
 
 import '../../../core/encryption.dart';
 import '../controller/preview_payment_controller.dart';
@@ -30,37 +31,49 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
 
   @override
   void didChangeDependencies() async {
-    try{
+    try {
       //Decode encrypted ID into randomID
       final String randomID = decryptString(widget.encryptedID);
       //Update randomID to provider
       ref.read(randomIdProvider.notifier).state = randomID;
       //Get photoSessionCollection data of the randomID
-      await ref.watch(previewPaymentControllerProvider.notifier).getPhotoSessionCollection(ref);
+      await ref
+          .watch(previewPaymentControllerProvider.notifier)
+          .getPhotoSessionCollection(ref);
       //Check if the session expired
-      if(sessionExpired()) throw Exception("Session expired");
+      if (sessionExpired()) throw Exception("Session expired");
       //Get photoID list through photoSessionCollection data
-      final photoIDList = stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
+      final photoIDList =
+          stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
       //Download photo previews
-      final photoPreviewFiles = await ref.watch(previewPaymentControllerProvider.notifier).getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
-      if (photoPreviewFiles.isEmpty) throw Exception('Photo preview files empty');
+      final photoPreviewFiles = await ref
+          .watch(previewPaymentControllerProvider.notifier)
+          .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
+      if (photoPreviewFiles.isEmpty)
+        throw Exception('Photo preview files empty');
       Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles));
-    } catch(e){
+    } catch (e) {
       print('Error: ${e.toString()}');
-      setState(() {
-        idExist = false;
-      });
 
+      switch (e.toString()) {
+        case "Exception: Session expired":
+          navigateErrorPage('頁面已過期');
+          break;
+        default:
+          navigateErrorPage('頁面不存在');
+      }
     }
 
     super.didChangeDependencies();
   }
 
-  bool sessionExpired(){
-    final DateTime photoCreatedTime = DateTime.parse(ref.read(photoSessionCollectionProvider)['created_time']);
+  bool sessionExpired() {
+    final DateTime photoCreatedTime = DateTime.parse(
+        ref.read(photoSessionCollectionProvider)['created_time']);
     // Calculate the target datetime (12am 2 days after the date)
     DateTime targetDatetime = photoCreatedTime.add(const Duration(days: 1));
-    targetDatetime = targetDatetime.copyWith(hour: 0, minute: 0, second: 0, microsecond: 0,millisecond: 0);
+    targetDatetime = targetDatetime.copyWith(
+        hour: 0, minute: 0, second: 0, microsecond: 0, millisecond: 0);
     // Get the current time
     DateTime now = DateTime.now();
 
@@ -68,22 +81,20 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
     Duration difference = targetDatetime.difference(now);
     int seconds = difference.inSeconds;
 
-    if(seconds>10){
+    if (seconds > 10) {
       return false;
-    }else {
+    } else {
       return true;
     }
   }
 
+  void navigateErrorPage(String errorMessage) {
+    Navigator.push(context,
+        GeneralError.route(allowReturn: false, errorMessage: errorMessage));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: idExist
-          ? loadingWidget('請稍後...')
-          : const Center(
-        child: Text('此頁面已過期'),
-      ),
-    );
-
+    return Scaffold(body: loadingWidget('請稍後...'));
   }
 }

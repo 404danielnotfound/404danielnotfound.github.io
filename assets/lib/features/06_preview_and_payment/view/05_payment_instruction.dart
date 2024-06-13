@@ -3,6 +3,7 @@ import 'package:remote_camera_official_app/common_widget/appbar.dart';
 import 'package:remote_camera_official_app/core/enum.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/payment_instruction_controller.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/04_processing_payment.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/dialogs.dart';
 import 'package:remote_camera_official_app/theme/import_theme.dart';
 
 import '../../09_FAQ/view/FAQ.dart';
@@ -65,7 +66,9 @@ class PaymentInstruction extends StatelessWidget {
                     ),
                     Expanded(
                         child: RectangleButton(
-                            onTap: (){},
+                            onTap: (){
+                              showDialog(context: context, builder: (BuildContext context) => const CustomerServiceDialog());
+                            },
                             text: '聯繫客服',
                             textSize: 16,
                             fontWeight: FontWeight.w400,
