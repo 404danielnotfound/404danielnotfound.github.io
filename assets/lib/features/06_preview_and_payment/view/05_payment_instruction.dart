@@ -54,7 +54,7 @@ class PaymentInstruction extends StatelessWidget {
               Row(
                 children: [
                   const SizedBox(
-                    width: 13,
+                    width: 20,
                   ),
                   Expanded(
                       child: ElevatedButton(
@@ -74,7 +74,7 @@ class PaymentInstruction extends StatelessWidget {
                     ),
                   )),
                   const SizedBox(
-                    width: 13,
+                    width: 20,
                   ),
                 ],
               ),
@@ -88,36 +88,3 @@ class PaymentInstruction extends StatelessWidget {
     );
   }
 }
-
-// class RectangleButton extends StatelessWidget {
-//   final String text;
-//   final double textSize;
-//   final FontWeight fontWeight;
-//   final VoidCallback onTap;
-//   final EdgeInsets padding;
-//
-//   const RectangleButton(
-//       {super.key,
-//         required this.onTap,
-//         this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-//         required this.text,
-//         required this.textSize,
-//         required this.fontWeight}); // Set default margin
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ElevatedButton(
-//       style: ElevatedButton.styleFrom(
-//         shape: const ContinuousRectangleBorder(),
-//         backgroundColor: Pallete.greyColor,
-//         foregroundColor: Pallete.textColor,
-//         padding: padding,
-//       ),
-//       onPressed: onTap,
-//       child: Text(
-//         text,
-//         style: TextStyle(fontSize: textSize, fontWeight: fontWeight),
-//       ),
-//     );
-//   }
-// }

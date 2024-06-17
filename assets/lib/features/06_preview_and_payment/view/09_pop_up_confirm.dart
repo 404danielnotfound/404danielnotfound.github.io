@@ -34,7 +34,7 @@ class PopUpConfirm extends ConsumerWidget {
           children: [
             appbar(context: context, popNum: 4),
             const SizedBox(
-              height: 110,
+              height: 95,
             ),
             const Text(
               '已自動跳轉至付款頁面',
@@ -53,7 +53,7 @@ class PopUpConfirm extends ConsumerWidget {
             ),
             const Text(
               '沒有看到付款頁面?',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 15,
