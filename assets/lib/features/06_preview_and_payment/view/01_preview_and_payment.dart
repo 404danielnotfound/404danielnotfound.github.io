@@ -165,27 +165,29 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
-                      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
-                      decoration: BoxDecoration(color: Pallete.mainColor, boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 1),
-                        )
-                      ]),
-                      child: const Text(
-                        '保存/分享此頁面',
-                        style: TextStyle(
-                            color: Pallete.textColor,
-                            fontSize: 19,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+                    //   decoration: BoxDecoration(color: Pallete.mainColor, boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.grey.withOpacity(0.1),
+                    //       spreadRadius: 1,
+                    //       blurRadius: 1,
+                    //       offset: const Offset(0, 1),
+                    //     )
+                    //   ]),
+                    //   child: const Text(
+                    //     '保存/分享此頁面',
+                    //     style: TextStyle(
+                    //         color: Pallete.textColor,
+                    //         fontSize: 19,
+                    //         fontWeight: FontWeight.w600),
+                    //   ),
+                    // ),
+                    SizedBox(height: 22,),
                     QRCodeShare(
                       previewImageFile: imageFiles[0],
+                      padding: 30,
                     ),
                     SizedBox(height: 20,),
                     qaAndService(context),
