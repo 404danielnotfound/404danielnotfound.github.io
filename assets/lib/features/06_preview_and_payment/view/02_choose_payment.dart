@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/03_confirmContact.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/QA_Service.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/dialogs.dart';
 import '../../../common_widget/appbar.dart';
 import '../../../core/enum.dart';
@@ -123,13 +125,21 @@ class ChoosePayment extends ConsumerWidget {
             child: Row(
               children: [
                 paymentCardType3(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                          helpMePay(ref.read(previewPhotoProvider),context));
+                    },
                     name: '找人代付',
                     logoAssetPath: 'lib/assets/icon/payment/store.png',
                     width: paymentCardWidth),
               ],
             ),
           ),
+          const Spacer(),
+          qaAndService(context),
+          SizedBox(height: 15,),
         ],
       ),
     );

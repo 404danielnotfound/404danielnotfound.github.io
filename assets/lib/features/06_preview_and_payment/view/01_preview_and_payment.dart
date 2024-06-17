@@ -9,6 +9,7 @@ import 'package:remote_camera_official_app/features/06_preview_and_payment/contr
 import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/02_choose_payment.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/view/07_payment_record.dart';
+import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/QA_Service.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/bill.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/carouselCard_preview.dart';
 import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/checkBoxes.dart';
@@ -38,7 +39,6 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   List<String> previewIDList = [];
   CarouselController carouselController = CarouselController();
   int currentIndex = 0;
-  double imageAspectRatio = 0;
 
 
   @override
@@ -57,7 +57,6 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   }
 
   void generateWidgets() {
-    imageAspectRatio = getAspectRatio(image: imageFiles[0]);
     imageFiles.asMap().forEach((i, photoFile) {
       //Generate carousel widget
       carouselWidget.add(carouselCardPreview(photoFile: photoFile, index: i));
@@ -71,6 +70,8 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
   }
 
   onPay() {
+    ref.read(previewPhotoProvider.notifier).state = imageFiles[0];
+
     if (ref.read(checkedPhotoIDProvider).isNotEmpty) {
       ref.read(previewPaymentControllerProvider.notifier).updateFinalPrice(ref);
       Navigator.push(context, ChoosePayment.route());
@@ -98,7 +99,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
           showIndicator: false,
           indicatorMargin: 30,
           viewportFraction: 1,
-          aspectRatio: imageAspectRatio,
+          aspectRatio: getAspectRatio(image: imageFiles[0]),
           onScrolled: (i) {
             final int? page = i?.round();
             if (page != currentIndex) {
@@ -164,10 +165,31 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         ],
                       ),
                     ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+                      decoration: BoxDecoration(color: Pallete.mainColor, boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: const Offset(0, 1),
+                        )
+                      ]),
+                      child: const Text(
+                        '保存/分享此頁面',
+                        style: TextStyle(
+                            color: Pallete.textColor,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
                     QRCodeShare(
-                      imageFiles: imageFiles[0],
-                      imageAspectRatio: imageAspectRatio,
-                    )
+                      previewImageFile: imageFiles[0],
+                    ),
+                    SizedBox(height: 20,),
+                    qaAndService(context),
+                    SizedBox(height: 20,)
                   ],
                 ),
         ));
