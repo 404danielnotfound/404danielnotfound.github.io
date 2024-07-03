@@ -20,7 +20,7 @@ import '../../../theme/pallete.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 
 class PreviewAndPaymentPage extends ConsumerStatefulWidget {
-  static route(List<Uint8List> photoPreviewFiles) => MaterialPageRoute(
+  static route({required List<Uint8List> photoPreviewFiles}) => MaterialPageRoute(
         builder: (context) => PreviewAndPaymentPage(photoPreviewFiles),
       );
 

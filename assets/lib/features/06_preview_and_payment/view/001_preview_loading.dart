@@ -12,15 +12,15 @@ import '../../../core/encryption.dart';
 import '../controller/preview_payment_controller.dart';
 
 class PreviewLoading extends ConsumerStatefulWidget {
-  static route(String encryptedID) => MaterialPageRoute(
+  static route(String? randomID) => MaterialPageRoute(
         builder: (context) => PreviewLoading(
-          encryptedID,
+          randomID,
         ),
       );
 
-  final String encryptedID;
+  final String? randomID;
 
-  const PreviewLoading(this.encryptedID, {super.key});
+  const PreviewLoading(this.randomID, {super.key});
 
   @override
   ConsumerState createState() => _PreviewLoadingState();
@@ -32,26 +32,36 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
   @override
   void didChangeDependencies() async {
     try {
-      //Decode encrypted ID into randomID
-      final String randomID = decryptString(widget.encryptedID);
-      //Update randomID to provider
-      ref.read(randomIdProvider.notifier).state = randomID;
+      if(widget.randomID != null){
+        //Update randomID to provider
+        ref.read(randomIdProvider.notifier).state = widget.randomID!;
+      }
+
       //Get photoSessionCollection data of the randomID
       await ref
           .watch(previewPaymentControllerProvider.notifier)
           .getPhotoSessionCollection(ref);
       //Check if the session expired
       if (sessionExpired()) throw Exception("Session expired");
-      //Get photoID list through photoSessionCollection data
-      final photoIDList =
-          stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
-      //Download photo previews
-      final photoPreviewFiles = await ref
-          .watch(previewPaymentControllerProvider.notifier)
-          .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
-      if (photoPreviewFiles.isEmpty)
-        throw Exception('Photo preview files empty');
-      Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles));
+
+      if(widget.randomID != null){
+        //Get photoID list through photoSessionCollection data
+        final photoIDList =
+        stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
+        //Download photo previews
+        final photoPreviewFiles = await ref
+            .watch(previewPaymentControllerProvider.notifier)
+            .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
+        if (photoPreviewFiles.isEmpty) {
+          throw Exception('Photo preview files empty');
+        }
+
+        Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles: photoPreviewFiles));
+      } else {
+        Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles: ref.read(takenPhotoProvider)));
+      }
+
+
     } catch (e) {
       print('Error: ${e.toString()}');
 
