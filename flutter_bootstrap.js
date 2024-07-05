@@ -12,9 +12,22 @@ _flutter.buildConfig = {"engineRevision":"edd8546116457bdf1c5bdfb13ecb9463d2bb5e
 const searchParams = new URLSearchParams(window.location.search);
 const forceCanvaskit = searchParams.get('force_canvaskit') === 'true';
 const userConfig = forceCanvaskit ? {'renderer': 'canvaskit'} : {};
+const loading = document.createElement('div');
+document.body.appendChild(loading);
+loading.textContent = "Loading Entrypoint...";
+
+
+
 _flutter.loader.load({
   config: userConfig,
   serviceWorkerSettings: {
-    serviceWorkerVersion: "475992705",
+    serviceWorkerVersion: "3750671563",
   },
+  onEntrypointLoaded: async function(engineInitializer) {
+    loading.textContent = "Initializing engine...";
+    const appRunner = await engineInitializer.initializeEngine();
+
+    loading.textContent = "Running app...";
+    await appRunner.runApp();
+  }
 });
