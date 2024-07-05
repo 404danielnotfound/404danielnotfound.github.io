@@ -1,11 +1,11 @@
 {
-    "name": "remote_camera_official_app",
-    "short_name": "remote_camera_official_app",
+    "name": "hip_camera_official",
+    "short_name": "hip_camera_official",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Official remote camera app flutter file",
+    "description": "7/4/2024",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

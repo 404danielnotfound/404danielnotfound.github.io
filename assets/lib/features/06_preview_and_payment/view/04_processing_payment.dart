@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/payment_controller.dart';
-import 'package:remote_camera_official_app/core/enum.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/09_pop_up_confirm.dart';
 import 'dart:html' as html;
+import '../../../core/enum.dart';
 import '../../../theme/pallete.dart';
+import '../controller/payment_controller.dart';
+import '09_pop_up_confirm.dart';
 
 class ProcessingPayment extends ConsumerStatefulWidget {
   static route({required PaymentType paymentType}) => MaterialPageRoute(

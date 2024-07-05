@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
-import 'package:remote_camera_official_app/core/enum.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/payment_controller.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/dialogs.dart';
-import 'package:remote_camera_official_app/features/07_photo_download/view/01_loading_photo.dart';
-import 'package:remote_camera_official_app/theme/import_theme.dart';
 import '../../../common_widget/appbar.dart';
+import '../../../common_widget/rectangle_theme_button.dart';
+import '../../../core/enum.dart';
+import '../../../theme/pallete.dart';
+import '../../07_photo_download/view/01_loading_photo.dart';
 import '../../09_FAQ/view/FAQ.dart';
+import '../controller/payment_controller.dart';
+import '../widget/dialogs.dart';
 
 class PopUpConfirm extends ConsumerWidget {
   static route({required VoidCallback onRetryPayment, required paymentID}) =>

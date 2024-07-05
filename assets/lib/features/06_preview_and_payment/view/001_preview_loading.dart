@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:remote_camera_official_app/common_widget/import_common_widgets.dart';
-import 'package:remote_camera_official_app/core/enum.dart';
-import 'package:remote_camera_official_app/core/import_core.dart';
-import 'package:remote_camera_official_app/core/providers.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/01_preview_and_payment.dart';
-import 'package:remote_camera_official_app/features/08_error/view/error_general.dart';
-
-import '../../../core/encryption.dart';
+import '../../../common_widget/loading_page.dart';
+import '../../../core/enum.dart';
+import '../../../core/providers.dart';
+import '../../../core/utils.dart';
+import '../../08_error/view/error_general.dart';
 import '../controller/preview_payment_controller.dart';
+import '../controller/provider.dart';
+import '01_preview_and_payment.dart';
 
 class PreviewLoading extends ConsumerStatefulWidget {
   static route(String? randomID) => MaterialPageRoute(

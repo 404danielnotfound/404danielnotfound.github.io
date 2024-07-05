@@ -3,21 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
-import 'package:remote_camera_official_app/core/import_core.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/preview_payment_controller.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/controller/provider.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/02_choose_payment.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/07_payment_record.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/QA_Service.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/bill.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/carouselCard_preview.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/checkBoxes.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/countdown.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/pageIndicator.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/widget/qr_code.dart';
-import '../../../theme/pallete.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+
+import '../../../common_widget/rectangle_theme_button.dart';
+import '../../../core/utils.dart';
+import '../controller/preview_payment_controller.dart';
+import '../controller/provider.dart';
+import '../widget/QA_Service.dart';
+import '../widget/bill.dart';
+import '../widget/carouselCard_preview.dart';
+import '../widget/checkBoxes.dart';
+import '../widget/countdown.dart';
+import '../widget/pageIndicator.dart';
+import '../widget/qr_code.dart';
+import '02_choose_payment.dart';
+import '07_payment_record.dart';
 
 class PreviewAndPaymentPage extends ConsumerStatefulWidget {
   static route({required List<Uint8List> photoPreviewFiles}) => MaterialPageRoute(

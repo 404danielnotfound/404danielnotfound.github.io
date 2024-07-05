@@ -1,15 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:remote_camera_official_app/common_widget/appbar.dart';
-import 'package:remote_camera_official_app/common_widget/rectangle_theme_button.dart';
-import 'package:remote_camera_official_app/features/05_contactRequest/controller/contact_provider.dart';
-import 'package:remote_camera_official_app/features/05_contactRequest/view/input_field.dart';
-import 'package:remote_camera_official_app/core/enum.dart';
-import 'package:remote_camera_official_app/features/06_preview_and_payment/view/05_payment_instruction.dart';
-import '../../../core/utils.dart';
+import '../../../common_widget/appbar.dart';
+import '../../../common_widget/rectangle_theme_button.dart';
+import '../../../core/enum.dart';
 import '../../../theme/pallete.dart';
-import '../../01_home/view/01_home_view.dart';
+import '../../05_contactRequest/controller/contact_provider.dart';
+import '../../05_contactRequest/view/input_field.dart';
+import '05_payment_instruction.dart';
 
 class ConfirmContactPage extends ConsumerStatefulWidget {
   final PaymentType paymentType;
