@@ -10,7 +10,7 @@ _flutter.buildConfig = {"engineRevision":"edd8546116457bdf1c5bdfb13ecb9463d2bb5e
 
 
 const searchParams = new URLSearchParams(window.location.search);
-const userConfig = {'renderer': 'canvaskit'};
+const userConfig = {renderer: 'canvaskit'};
 const loading = document.createElement('div');
 document.body.appendChild(loading);
 loading.textContent = "Loading Entrypoint...";
@@ -20,7 +20,7 @@ loading.textContent = "Loading Entrypoint...";
 _flutter.loader.load({
   config: userConfig,
   serviceWorkerSettings: {
-    serviceWorkerVersion: "2827276717",
+    serviceWorkerVersion: "2055387525",
   },
   onEntrypointLoaded: async function(engineInitializer) {
     loading.textContent = "Initializing engine...";
