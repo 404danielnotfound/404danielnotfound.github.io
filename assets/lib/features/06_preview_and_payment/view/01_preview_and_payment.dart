@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
-
 import '../../../common_widget/rectangle_theme_button.dart';
 import '../../../core/utils.dart';
 import '../controller/preview_payment_controller.dart';
@@ -52,7 +51,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
 
   @override
   void didChangeDependencies() async {
-    ref.watch(previewPaymentControllerProvider.notifier).startCountdown(ref);
+
     super.didChangeDependencies();
   }
 
@@ -159,7 +158,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
             const SizedBox(
               height: 10,
             ),
-            const CountdownTimer(),
+            const CountdownTimer2(),
           ],
         )
                         ],

@@ -28,49 +28,55 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
   bool idExist = true;
 
   @override
-  void didChangeDependencies() async {
-    try {
-      if(ref.read(randomIdProvider)==''){
-        //Update randomID to provider
-        ref.read(randomIdProvider.notifier).state = widget.randomID!;
-      }
-
-      //Get photoSessionCollection data of the randomID
-      await ref
-          .watch(previewPaymentControllerProvider.notifier)
-          .getPhotoSessionCollection(ref);
-      //Check if the session expired
-      if (sessionExpired()) throw Exception("Session expired");
-
-      if(ref.read(takenPhotoProvider)==[]){
-        //Get photoID list through photoSessionCollection data
-        final photoIDList =
-        stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
-        //Download photo previews
-        final photoPreviewFiles = await ref
-            .watch(previewPaymentControllerProvider.notifier)
-            .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
-        if (photoPreviewFiles.isEmpty) {
-          throw Exception('Photo preview files empty');
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        if(ref.read(randomIdProvider)==''){
+          //Update randomID to provider
+          ref.read(randomIdProvider.notifier).state = widget.randomID!;
+          print('Random id provider is empty, new value updated: ${widget.randomID}');
         }
 
-        Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles: photoPreviewFiles));
-      } else {
-        Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles: ref.read(takenPhotoProvider)));
+        //Get photoSessionCollection data of the randomID
+        await ref
+            .watch(previewPaymentControllerProvider.notifier)
+            .getPhotoSessionCollection(ref);
+        //Check if the session expired
+        if (sessionExpired()) throw Exception("Session expired");
+
+        if(ref.read(takenPhotoProvider).toString()=='[]'){
+
+          //Get photoID list through photoSessionCollection data
+          final photoIDList =
+          stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
+
+          //Download photo previews
+          final photoPreviewFiles = await ref
+              .watch(previewPaymentControllerProvider.notifier)
+              .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
+          if (photoPreviewFiles.isEmpty) {
+            throw Exception('Photo preview files empty');
+          }
+
+          Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles: photoPreviewFiles));
+        } else {
+          Navigator.push(context, PreviewAndPaymentPage.route(photoPreviewFiles: ref.read(takenPhotoProvider)));
+        }
+
+
+      } catch (e) {
+        print('Error: ${e.toString()}');
+
+        switch (e.toString()) {
+          case "Exception: Session expired":
+            navigateErrorPage('頁面已過期');
+            break;
+          default:
+            navigateErrorPage('頁面不存在');
+        }
       }
+    });
 
-
-    } catch (e) {
-      print('Error: ${e.toString()}');
-
-      switch (e.toString()) {
-        case "Exception: Session expired":
-          navigateErrorPage('頁面已過期');
-          break;
-        default:
-          navigateErrorPage('頁面不存在');
-      }
-    }
 
     super.didChangeDependencies();
   }
