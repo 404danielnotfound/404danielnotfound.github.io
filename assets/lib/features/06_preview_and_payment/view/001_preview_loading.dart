@@ -30,7 +30,7 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
   @override
   void didChangeDependencies() async {
     try {
-      if(widget.randomID != null){
+      if(ref.read(randomIdProvider)==''){
         //Update randomID to provider
         ref.read(randomIdProvider.notifier).state = widget.randomID!;
       }
@@ -42,7 +42,7 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
       //Check if the session expired
       if (sessionExpired()) throw Exception("Session expired");
 
-      if(widget.randomID != null){
+      if(ref.read(takenPhotoProvider)==[]){
         //Get photoID list through photoSessionCollection data
         final photoIDList =
         stringToList((ref.read(photoSessionCollectionProvider))['photoID']);
