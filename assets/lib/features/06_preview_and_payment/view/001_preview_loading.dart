@@ -4,6 +4,7 @@ import '../../../common_widget/loading_page.dart';
 import '../../../core/enum.dart';
 import '../../../core/providers.dart';
 import '../../../core/utils.dart';
+import '../../01_home/controller/home_controller.dart';
 import '../../08_error/view/error_general.dart';
 import '../controller/preview_payment_controller.dart';
 import '../controller/provider.dart';
@@ -30,6 +31,7 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(homeControllerProvider.notifier).createAnonymousSession(ref);
       try {
         if(ref.read(randomIdProvider)==''){
           //Update randomID to provider
