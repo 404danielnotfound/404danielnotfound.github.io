@@ -55,7 +55,7 @@ class _PreviewLoadingState extends ConsumerState<PreviewLoading> {
           //Download photo previews
           final photoPreviewFiles = await ref
               .watch(previewPaymentControllerProvider.notifier)
-              .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low);
+              .getPhotoPreview(photoIDList: photoIDList, quality: PhotoQuality.low,waterMarked: true);
           if (photoPreviewFiles.isEmpty) {
             throw Exception('Photo preview files empty');
           }
