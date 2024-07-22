@@ -60,7 +60,7 @@ class PopUpConfirm extends ConsumerWidget {
             Container(
                 margin: const EdgeInsets.symmetric(horizontal: 120),
                 width: double.infinity,
-                child: RectangleButton2(
+                child: RectangleButton(
                   onTap: onRetryPayment,
                   text: '再試一次',
                   textSize: 19,
@@ -73,7 +73,7 @@ class PopUpConfirm extends ConsumerWidget {
             Container(
                 margin: const EdgeInsets.symmetric(horizontal: 120),
                 width: double.infinity,
-                child: RectangleButton2(
+                child: RectangleButton(
                     onTap: () {
                       Navigator.push(context, FAQ.route());
                     },
@@ -87,7 +87,7 @@ class PopUpConfirm extends ConsumerWidget {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 13, vertical: 13),
                 width: double.infinity,
-                child: RectangleButton2(
+                child: RectangleButton(
                     onTap: () async {
                       final paymentResult = await ref
                           .read(paymentControllerProvider.notifier)

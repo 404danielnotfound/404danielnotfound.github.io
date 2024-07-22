@@ -88,7 +88,7 @@ class _ContactRequestPageState extends ConsumerState<ConfirmContactPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    RectangleButton2(
+                    RectangleButton(
                         onTap: onConfirm,
                         text: '提交',
                         textSize: 20,

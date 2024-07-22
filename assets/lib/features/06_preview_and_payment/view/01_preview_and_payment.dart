@@ -132,7 +132,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            RectangleButton2(
+            RectangleButton(
               onTap: () {
                 onPay();
               },
@@ -145,7 +145,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
             const SizedBox(
               height: 10,
             ),
-            hasPaymentRecord? RectangleButton2(
+            hasPaymentRecord? RectangleButton(
               onTap: () {
                 Navigator.push(context, PaymentRecord.route());
               },
