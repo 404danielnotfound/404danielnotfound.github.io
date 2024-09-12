@@ -1,7 +1,5 @@
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import '../../../common_widget/rectangle_theme_button.dart';
@@ -164,14 +162,14 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 22,),
+                    const SizedBox(height: 22,),
                     QRCodeShare(
                       previewImageFile: imageFiles[0],
                       padding: 30,
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     qaAndService(context),
-                    SizedBox(height: 20,)
+                    const SizedBox(height: 20,)
                   ],
                 ),
         ));
