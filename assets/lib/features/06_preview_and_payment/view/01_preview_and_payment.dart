@@ -121,7 +121,7 @@ class _PreviewAndPaymentPageState extends ConsumerState<PreviewAndPaymentPage> {
                         children: checkBoxWidgetList,
                       ),
                     ),
-                    BillNew(),
+                    Bill(),
                     Padding(
                       padding: const EdgeInsets.only(right: 20, top: 36),
                       child: Row(
