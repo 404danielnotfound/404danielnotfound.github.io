@@ -18,7 +18,7 @@ loading.textContent = "Loading Entrypoint...";
 
 _flutter.loader.load({
   serviceWorkerSettings: {
-    serviceWorkerVersion: "605641314",
+    serviceWorkerVersion: "2739297268",
   },
   onEntrypointLoaded: async function(engineInitializer) {
     loading.textContent = "Initializing engine...";
