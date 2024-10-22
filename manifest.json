@@ -1,11 +1,11 @@
 {
-    "name": "hip_camera_official",
-    "short_name": "hip_camera_official",
+    "name": "auto_receipt_checker",
+    "short_name": "auto_receipt_checker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "7/4/2024",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
