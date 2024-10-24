@@ -1,11 +1,11 @@
 {
-    "name": "auto_receipt_checker",
-    "short_name": "auto_receipt_checker",
+    "name": "auto_receipt_checker_2",
+    "short_name": "auto_receipt_checker_2",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Updated version to solve web compile issue",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
