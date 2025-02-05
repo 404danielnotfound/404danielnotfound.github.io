@@ -1,11 +1,11 @@
 {
-    "name": "auto_receipt_checker_2",
-    "short_name": "auto_receipt_checker_2",
+    "name": "hip_camera_official",
+    "short_name": "hip_camera_official",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Updated version to solve web compile issue",
+    "description": "7/4/2024",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
